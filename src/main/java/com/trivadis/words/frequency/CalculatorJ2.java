@@ -8,23 +8,31 @@ import java.util.*;
 /**
  * Implementation using Java standard library 1.2
  */
-public final class CalculatorJ2 implements Calculator {
+public class CalculatorJ2 implements Calculator {
 
     @Override
     public Collection<String> extractWords(String path) {
-        ArrayList<String> words = new ArrayList<>( 0x1000 );
+        List<String> words = new ArrayList<>();
+        try {
+            words = extractAll(path);
+        } catch ( IOException e ) {
+            throw new RuntimeException( e );
+        }
+        return words;
+    }
+
+    List<String> extractAll(String path) throws IOException {
+        List<String> words = new ArrayList<>( 0x1000 );
         try ( BufferedReader reader = new BufferedReader( new FileReader( path ) ) ) {
-            for ( String line = reader.readLine(); line != null; line = reader.readLine() ) {
-                StringTokenizer tokenizer = new StringTokenizer( line );
-                while ( tokenizer.hasMoreElements() ) {
+            for (String line = reader.readLine(); line != null; line = reader.readLine()) {
+                StringTokenizer tokenizer = new StringTokenizer(line);
+                while (tokenizer.hasMoreElements()) {
                     String word = tokenizer.nextToken();
-                    if ( word.length() > WORD_LENGTH_THRESHOLD ) {
-                        words.add( word.toLowerCase() );
+                    if (word.length() > WORD_LENGTH_THRESHOLD) {
+                        words.add(word.toLowerCase());
                     }
                 }
             }
-        } catch ( IOException e ) {
-            throw new RuntimeException( e );
         }
         return words;
     }
