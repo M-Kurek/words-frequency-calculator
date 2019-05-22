@@ -9,27 +9,12 @@ public class CalculatorJ2Test {
 
     @Test
     public void watch() throws Exception {
-        CalculatorJ2 calc = new CalculatorJ2Copy();
+        CalculatorJ2 calc = new CalculatorJ2();
         int elapsedFirst = watchTime("texts/bible_ylt.txt", calc).getElapsedTimeMs();
         System.out.println("1st " + elapsedFirst);
-        for (String it : "1 2 3 4 5 6 7 8".split(" ")) {
+        for (int it = 0; it < 8; it++) {
             watchTime("texts/4_gospels.txt", calc);
         }
-        //then
-        int elapsedLast = watchTime("texts/bible_ylt.txt", calc).getElapsedTimeMs();
-        System.out.println("czas " + elapsedLast + " ms,\t" + 100 * elapsedLast / elapsedFirst + "%");
-
-    }
-
-    @Test
-    public void watchWhenBigFileAtTwoLastRuns() throws Exception {
-        CalculatorJ2 calc = new CalculatorJ2JITCopy();
-        int elapsedFirst = watchTime("texts/bible_ylt.txt", calc).getElapsedTimeMs();
-        System.out.println("1st " + elapsedFirst);
-        for (String it : "1 2 3 4 5 6 7".split(" ")) {
-            watchTime("texts/4_gospels.txt", calc);
-        }
-        watchTime("texts/bible_ylt.txt", calc).getElapsedTimeMs();
         //then
         int elapsedLast = watchTime("texts/bible_ylt.txt", calc).getElapsedTimeMs();
         System.out.println("czas " + elapsedLast + " ms,\t" + 100 * elapsedLast / elapsedFirst + "%");
